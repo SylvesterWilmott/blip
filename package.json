@@ -1,0 +1,45 @@
+{
+    "name": "blip",
+    "productName": "Blip",
+    "version": "1.0.0",
+    "description": "Access frequently used files or folders from the menubar",
+    "main": "src/main.js",
+    "scripts": {
+      "start": "electron .",
+      "dist": "electron-builder"
+    },
+    "author": "Sylvester Wilmott",
+    "license": "GPL-3.0",
+    "private": true,
+    "devDependencies": {
+      "electron": "^22.2.0",
+      "electron-builder": "^23.6.0"
+    },
+    "dependencies": {
+      "electron-store": "^8.1.0",
+      "npm-check-updates": "^16.6.5"
+    },
+    "build": {
+      "appId": "com.sylvesterwilmott.blip",
+      "productName": "Blip",
+      "icon": "src/images/ic_app.icns",
+      "directories": {
+        "output": "dist"
+      },
+      "mac": {
+        "hardenedRuntime": true,
+        "entitlements": "build/entitlements.mac.plist",
+        "entitlementsInherit": "build/entitlements.mac.plist",
+        "gatekeeperAssess": false,
+        "target": [
+          {
+            "target": "default",
+            "arch": "universal"
+          }
+        ],
+        "category": "public.app-category.utilities",
+        "artifactName": "${productName}-${version}-${os}.${ext}"
+      }
+    }
+  }
+  
