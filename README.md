@@ -5,7 +5,6 @@ Access frequently used files or folders from the menubar. Built with Electron.
 ![Screenshot](./docs/assets/screenshot.jpg?raw=true)
 
 ## Installation
-
 1. Clone the repo
 2. `cd blip`
 3. `yarn install`
@@ -13,3 +12,8 @@ Access frequently used files or folders from the menubar. Built with Electron.
 
 ## Build
 - `yarn dist`
+
+## Usage
+- Choose "Add" to browse for a file or folder or drag and drop directly onto the menubar icon.
+- Access files from the menubar by choosing `Open` or `Reveal in Finder`.
+- Remove a file or folder by choosing `Remove`.
