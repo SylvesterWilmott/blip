@@ -380,7 +380,13 @@ function registerListeners() {
     for (const key in defaults) {
       userPrefs[key] = result[key];
     }
+  });
 
+  storage.onDidChange("pref_open_at_login", (status) => {
+    setLoginSettings(status);
+  });
+
+  storage.onDidChange("favourites", (result) => {
     buildMenu();
   });
 }
