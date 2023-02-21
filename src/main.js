@@ -9,8 +9,8 @@ const strings = require(path.join(__dirname, 'strings.js'))
 
 let tray
 let menu
-const userPrefs = {}
 let dialogIsOpen = false
+const userPrefs = {}
 
 const defaults = {
   favourites: [],

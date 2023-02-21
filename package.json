@@ -16,8 +16,7 @@
       "electron-builder": "^23.6.0"
     },
     "dependencies": {
-      "electron-store": "^8.1.0",
-      "npm-check-updates": "^16.6.5"
+      "electron-store": "^8.1.0"
     },
     "build": {
       "appId": "com.sylvesterwilmott.blip",
