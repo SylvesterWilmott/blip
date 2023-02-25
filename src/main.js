@@ -5,6 +5,7 @@ const { app, Menu, Tray, dialog, shell, nativeImage } = require('electron')
 const fs = require('fs')
 const path = require('path')
 const Store = require('electron-store')
+const { autoUpdater } = require('electron-updater')
 const strings = require(path.join(__dirname, 'strings.js'))
 
 let tray
@@ -26,6 +27,7 @@ app.on('ready', async function () {
   await buildMenu()
   registerListeners()
   setupAppSettings()
+  autoUpdater.checkForUpdatesAndNotify()
 })
 
 function getUserPrefs () {
