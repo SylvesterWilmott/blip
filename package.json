@@ -1,51 +1,92 @@
 {
-    "name": "blip",
+  "name": "blip",
+  "productName": "Blip",
+  "version": "1.0.0",
+  "description": "Access frequently used files or folders from the menubar",
+  "main": "src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SylvesterWilmott/blip"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "release": "electron-builder"
+  },
+  "author": "Sylvester Wilmott",
+  "license": "GPL-3.0",
+  "private": true,
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "electron": "^22.2.0",
+    "electron-builder": "^23.6.0",
+    "electron-notarize": "^1.2.2"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "electron-updater": "^5.3.0"
+  },
+  "build": {
+    "appId": "com.sylvesterwilmott.blip",
     "productName": "Blip",
-    "version": "1.0.0",
-    "description": "Access frequently used files or folders from the menubar",
-    "main": "src/main.js",
-    "scripts": {
-      "start": "electron .",
-      "dist": "electron-builder"
+    "icon": "src/images/ic_app.icns",
+    "directories": {
+      "output": "dist"
     },
-    "author": "Sylvester Wilmott",
-    "license": "GPL-3.0",
-    "private": true,
-    "devDependencies": {
-      "electron": "^22.2.0",
-      "electron-builder": "^23.6.0"
-    },
-    "dependencies": {
-      "electron-store": "^8.1.0"
-    },
-    "build": {
-      "appId": "com.sylvesterwilmott.blip",
-      "productName": "Blip",
-      "icon": "src/images/ic_app.icns",
-      "directories": {
-        "output": "dist"
-      },
-      "mac": {
-        "hardenedRuntime": true,
-        "entitlements": "build/entitlements.mac.plist",
-        "entitlementsInherit": "build/entitlements.mac.plist",
-        "gatekeeperAssess": false,
-        "files": [
-          "!README.md",
-          "!.git/*",
-          "!docs/*",
-          "!build/*",
-          "!dist/*"
-        ],
-        "target": [
-          {
-            "target": "default",
-            "arch": "universal"
-          }
-        ],
-        "category": "public.app-category.utilities",
-        "artifactName": "${productName}-${version}-${os}.${ext}"
+    "publish": [
+      {
+        "provider": "github",
+        "token": "$(grep GH_TOKEN .env | cut -d '=' -f2)"
       }
+    ],
+    "afterSign": "notarize.js",
+    "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "files": [
+        "!README.md",
+        "!notarize.js",
+        "!.env",
+        "!.git/*",
+        "!docs/*",
+        "!build/*",
+        "!dist/*"
+      ],
+      "target": [
+        {
+          "target": "default",
+          "arch": "universal"
+        }
+      ],
+      "category": "public.app-category.utilities",
+      "artifactName": "${productName}-${version}-${os}.${ext}",
+      "publish": [
+        "github"
+      ]
+    },
+    "dmg": {
+      "backgroundColor": "#f0f0f0",
+      "icon": "build/icon.icns",
+      "title": "${productName} ${version}",
+      "window": {
+        "width": 540,
+        "height": 380
+      },
+      "iconSize": 96,
+      "contents": [
+        {
+          "x": 174,
+          "y": 159
+        },
+        {
+          "x": 366,
+          "y": 159,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     }
   }
-  
+}
