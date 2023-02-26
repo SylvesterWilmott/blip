@@ -157,7 +157,8 @@ function addToFavourites (filePaths) {
     const rejectedArr = []
 
     for (const item of rejected) {
-      rejectedArr.push(item)
+      const baseName = path.basename(item)
+      rejectedArr.push(baseName)
     }
 
     const rejectedArrToStr =
@@ -167,8 +168,8 @@ function addToFavourites (filePaths) {
 
     const rejectedStr =
       rejectedArr.length > 1
-        ? `The files/folders "${rejectedArrToStr}" are already added`
-        : `The file/folder "${rejectedArrToStr}" is already added`
+        ? `The files "${rejectedArrToStr}" were already added`
+        : `The file "${rejectedArrToStr}" is already added`
 
     dialog
       .showMessageBox({
