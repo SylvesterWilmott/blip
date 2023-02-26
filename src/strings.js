@@ -1,7 +1,7 @@
 'use strict'
 
 const uiStrings = {
-  ADD: 'Add',
+  ADD: 'Add...',
   CLEAR_ALL: 'Remove All',
   PREFERENCES: 'Preferences',
   OPEN_AT_LOGIN: 'Open at Login',
