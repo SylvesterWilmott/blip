@@ -1,6 +1,6 @@
 # Blip
 
-Access frequently used files or folders from the menubar. Built with Electron.
+Access frequently used files, folders or apps from the menubar. Built with Electron.
 
 ![Screenshot](./docs/assets/screenshot.jpg?raw=true)
 
