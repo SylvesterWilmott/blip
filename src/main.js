@@ -157,7 +157,8 @@ function addToFavourites (filePaths) {
     const rejectedArr = []
 
     for (const item of rejected) {
-      rejectedArr.push(item)
+      const baseName = path.basename(item)
+      rejectedArr.push(baseName)
     }
 
     const rejectedArrToStr =
@@ -167,8 +168,8 @@ function addToFavourites (filePaths) {
 
     const rejectedStr =
       rejectedArr.length > 1
-        ? `The files/folders "${rejectedArrToStr}" are already added`
-        : `The file/folder "${rejectedArrToStr}" is already added`
+        ? `The files "${rejectedArrToStr}" were already added`
+        : `The file "${rejectedArrToStr}" is already added`
 
     dialog
       .showMessageBox({
@@ -241,6 +242,8 @@ function getTruncatedFilename (name, ext) {
     return `${start}...${end}${ext}`
   }
 
+  if (ext === '.app') return `${name}`
+
   return `${name}${ext}`
 }
 
@@ -278,28 +281,74 @@ async function getFavouriteMenuItem (obj, i) {
     submenu: subMenuItem
   }
 
-  if (obj.type === 'dir' || obj.type === 'app') {
-    try {
-      const icon = await nativeImage.createThumbnailFromPath(obj.path, {
-        width: 16,
-        height: 16
-      })
-
-      menuItem.icon = icon
-    } catch (err) {
-      console.error(err)
-    }
+  if (obj.type === 'dir') {
+    const icon = await getThumbnail(obj.path)
+    if (icon) menuItem.icon = icon
+  } else if (obj.type === 'app') {
+    const icon = await getAppIcon(obj.path)
+    if (icon) menuItem.icon = icon
   } else {
-    try {
-      const icon = await app.getFileIcon(obj.path, { size: 'small' })
-
-      menuItem.icon = icon
-    } catch (err) {
-      console.error(err)
-    }
+    const icon = await getFileIcon(obj.path)
+    if (icon) menuItem.icon = icon
   }
 
   return menuItem
+}
+
+async function getAppIcon (appPath) {
+  let icon = null
+  let iconPath = null
+
+  const contentsPath = path.join(appPath, 'Contents')
+  const resourcesPath = path.join(contentsPath, 'Resources')
+
+  if (fs.existsSync(resourcesPath)) {
+    const files = fs.readdirSync(resourcesPath)
+
+    for (const f of files) {
+      const ext = path.extname(f)
+
+      if (ext === '.icns') {
+        iconPath = path.join(resourcesPath, f)
+        break
+      }
+    }
+  }
+
+  if (iconPath) {
+    icon = await getThumbnail(iconPath)
+  } else {
+    icon = await getFileIcon(appPath)
+  }
+
+  return icon
+}
+
+async function getThumbnail (filePath) {
+  let icon = null
+
+  try {
+    icon = await nativeImage.createThumbnailFromPath(filePath, {
+      width: 16,
+      height: 16
+    })
+  } catch (err) {
+    console.log(err)
+  }
+
+  return icon
+}
+
+async function getFileIcon (filePath) {
+  let icon = null
+
+  try {
+    icon = await app.getFileIcon(filePath, { size: 'small' })
+  } catch (err) {
+    console.log(err)
+  }
+
+  return icon
 }
 
 function handleFile (filePath, i, action) {

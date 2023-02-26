@@ -2,7 +2,7 @@
   "name": "blip",
   "productName": "Blip",
   "version": "1.0.0",
-  "description": "Access frequently used files or folders from the menubar",
+  "description": "Access frequently used files, folders or apps from the menubar",
   "main": "src/main.js",
   "repository": {
     "type": "git",
